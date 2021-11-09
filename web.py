@@ -6,7 +6,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2,preprocess_input as mobilenet_v2_preprocess_input
 import time
-from state import count_sessions
+import count_sessions
 from PIL import Image
 count_sessions()
 st.set_page_config(page_title='BPLDID', page_icon='🍃', layout='wide')
