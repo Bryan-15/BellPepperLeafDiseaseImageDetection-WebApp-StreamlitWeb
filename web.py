@@ -89,6 +89,7 @@ if choice == "IMAGE DETECTION":
         time.sleep(7)
         st.header("BELL PEPPER LEAF DISEASE IMAGE DETECTION")
         st.markdown('##')
+        st.write("Total Number of Performed Image Detection")
         main_container = st.container()
         if "counter" not in st.session_state:
             st.session_state.counter = 0
