@@ -124,6 +124,9 @@ if choice == "IMAGE DETECTION":
                 st.title("The Image Result Is {}".format(map_dict [prediction]))
                 main_container.write(st.session_state.counter)
                 st.session_state.counter += 1
+                with open((uploaded_file.name),"wb") as f:
+                    f.write(uploaded_file.getbuffer())
+                st.success("Image Saved")
 
 if choice=="ABOUT US":
     with st.spinner('Loading Please Wait...'):
