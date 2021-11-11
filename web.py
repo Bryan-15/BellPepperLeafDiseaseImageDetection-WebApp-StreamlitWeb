@@ -7,6 +7,7 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2,preprocess_input as mobilenet_v2_preprocess_input
 import time
 from PIL import Image
+import pandas as pd
 
 st.set_page_config(page_title='BPLDID', page_icon='🍃', layout='wide')
 st.title("BELL PEPPER LEAF DISEASE IMAGE DETECTION WEB SYSTEM")
@@ -89,6 +90,8 @@ if choice == "IMAGE DETECTION":
         time.sleep(7)
         st.header("BELL PEPPER LEAF DISEASE IMAGE DETECTION")
         st.markdown('##')
+        df = pd.read_csv("db.csv")
+        st.write(df)
         st.write("Total Number of Performed Image Detection")
         main_container = st.container()
         if "counter" not in st.session_state:
@@ -124,9 +127,16 @@ if choice == "IMAGE DETECTION":
                 st.title("The Image Result Is {}".format(map_dict [prediction]))
                 main_container.write(st.session_state.counter)
                 st.session_state.counter += 1
-                with open((uploaded_file.name),"wb") as f:
-                    f.write(uploaded_file.getbuffer())
-                st.success("Image Saved")
+                form = st.form("form")
+                res = form.text_input("Please Enter The Outcome")
+                add_data = form.form_submit_button()
+                if add_data:
+                    st.write(res)
+                    new_data = {"Outcome": res}
+                    st.write(new_data)
+                    df = df.append(new_data, ignore_index=True)
+                    df.to_csv("db.csv", index=False)
+                
 
 if choice=="ABOUT US":
     with st.spinner('Loading Please Wait...'):
