@@ -90,9 +90,6 @@ if choice == "IMAGE DETECTION":
         time.sleep(7)
         st.header("BELL PEPPER LEAF DISEASE IMAGE DETECTION")
         st.markdown('##')
-        df = pd.read_csv("db.csv")
-        st.write(df)
-        st.write("Total Number of Performed Image Detection")
         main_container = st.container()
         if "counter" not in st.session_state:
             st.session_state.counter = 0
@@ -126,17 +123,24 @@ if choice == "IMAGE DETECTION":
                 prediction = model.predict(img_reshape).argmax()
                 st.title("The Image Result Is {}".format(map_dict [prediction]))
                 main_container.write(st.session_state.counter)
-                st.session_state.counter += 1
-                form = st.form("form")
-                res = form.text_input("Please Enter The Outcome")
-                add_data = form.form_submit_button()
-                if add_data:
-                    st.write(res)
-                    new_data = {"Outcome": res}
-                    st.write(new_data)
-                    df = df.append(new_data, ignore_index=True)
-                    df.to_csv("db.csv", index=False)
-                
+                st.session_state.counter + 1
+             
+            df = pd.read_csv("data/result.csv")
+            st.write(df)
+            options = st.header("Options")
+            options_form = st.form("options_form")
+            options.write("Please Fill Up The Form Below:")
+            user_result = options_form.text_input("Image Result")
+            user_age = options_form.text_input("Your Age")
+            add_data = options_form.form_submit_button()
+            if add_data:
+                st.write(user_result,user_age)
+                new_data = {"result": user_result , "age" : int(user_age)}
+                st.write(new_data)
+                df = df.append(new_data, ignore_index=True)
+                df.to_csv("data/result.csv", index=False)
+                st.success("Thank You! Please Head To Home Page For More Info")
+
 
 if choice=="ABOUT US":
     with st.spinner('Loading Please Wait...'):
