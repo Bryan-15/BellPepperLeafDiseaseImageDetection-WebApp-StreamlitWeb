@@ -45,7 +45,7 @@ if choice == "HOME":
         </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("<h1 style='text-align: center; color: white;'>WELCOME TO THE HOME PAGE</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center;'>WELCOME TO THE HOME PAGE</h1>", unsafe_allow_html=True)
         st.markdown('##')
         st.markdown("<h1 style='text-align: center; color: white;'>BELL PEPPER LEAF DISEASE INFORMATIONS</h1>", unsafe_allow_html=True)
         st.markdown('##')
