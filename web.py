@@ -140,6 +140,17 @@ if choice == "IMAGE DETECTION":
                 df = df.append(new_data, ignore_index=True)
                 df.to_csv("data/result.csv", index=False)
                 st.success("Thank You! Please Head To Home Page For More Info")
+                @st.cache
+                def convert_df(df):
+                    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+                    return df.to_csv().encode('utf-8')
+                csv = convert_df(df)
+                st.download_button(
+                                    label="Download CSV",
+                                     data= csv,
+                                     file_name='result.csv',
+                                     mime='text/csv',
+                                    )
 
 
 if choice=="ABOUT US":
