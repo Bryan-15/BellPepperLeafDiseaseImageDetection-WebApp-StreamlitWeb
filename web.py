@@ -45,7 +45,6 @@ if choice == "HOME":
         </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("<h1 style='text-align: center;'>WELCOME TO THE HOME PAGE</h1>", unsafe_allow_html=True)
         st.markdown('##')
         st.markdown("<h1 style='text-align: center; '>BELL PEPPER LEAF DISEASE INFORMATIONS</h1>", unsafe_allow_html=True)
         st.markdown('##')
@@ -168,7 +167,6 @@ if choice=="ABOUT US":
         </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("<h1 style='text-align: center;'>WELCOME TO ABOUT US PAGE</h1>", unsafe_allow_html=True)
         st.markdown('##')
         st.markdown("<h2 style='text-align: center;'>About Us</h2>", unsafe_allow_html=True)
         st.markdown('##')
@@ -213,7 +211,6 @@ if choice=="CONTACT":
         </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("<h1 style='text-align: center;'>WELCOME TO CONTACT PAGE</h1>", unsafe_allow_html=True)
         st.markdown('##')
         st.markdown("<h2 style='text-align: center;'>YOU CAN CONTACT US THROUGH</h2>", unsafe_allow_html=True)
         st.markdown('##')
