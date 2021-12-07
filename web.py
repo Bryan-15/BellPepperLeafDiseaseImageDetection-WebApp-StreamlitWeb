@@ -27,10 +27,72 @@ hide_menu_style = """
         """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-choice=st.sidebar.selectbox("Choose Here.",["HOME","IMAGE DETECTION","ABOUT US","CONTACT"])
+page_names =['Image Detection','Bell Pepper Disease','About Us','Contact']
+page = st.sidebar.radio('', page_names)
 
 
-if choice == "HOME":
+if page == 'Image Detection':
+    with st.spinner('Loading Please Wait...'):
+        time.sleep(7)
+        st.header("BELL PEPPER LEAF DISEASE IMAGE DETECTION")
+        st.markdown('##') 
+
+        model = tf.keras.models.load_model("saved_model/mdl_wt.hdf5") 
+
+        uploaded_file = st.file_uploader("Choose a image file", type="jpg")
+
+        map_dict = {0: 'Not Healthy, Bacterial Spot',
+                    1: 'Not Healthy, Cercospora Spot',
+                    2: 'Healthy', 
+                    3: 'Not Healthy, Powdery Mildew'}
+
+
+        if uploaded_file is not None:
+            # Convert the file to an opencv image.
+            file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8) 
+            opencv_image = cv2.imdecode(file_bytes, 1)
+            opencv_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
+            resized = cv2.resize(opencv_image,(224,224))
+            # Now do something with the image! For example, let's display it:
+            st.image(opencv_image, channels="RGB")
+
+            resized = mobilenet_v2_preprocess_input(resized)
+            img_reshape = resized[np.newaxis,...]
+
+            Genrate_pred = st.button("Identify Image")    
+            if Genrate_pred:
+                prediction = model.predict(img_reshape).argmax()
+                st.title("The Image Result Is {}".format(map_dict [prediction]))
+
+             
+            df = pd.read_csv("data/result.csv")
+            st.write(df)
+            options = st.header("Options")
+            options_form = st.form("options_form")
+            options.write("Please Fill Up The Form Below:")
+            user_result = options_form.text_input("Image Result")
+            user_age = options_form.text_input("Your Age")
+            add_data = options_form.form_submit_button()
+            if add_data:
+                st.write(user_result,user_age)
+                new_data = {"result": user_result , "age" : int(user_age)}
+                st.write(new_data)
+                df = df.append(new_data, ignore_index=True)
+                df.to_csv("data/result.csv", index=False)
+                st.success("Thank You! Please Head To Home Page For More Info")
+                @st.cache
+                def convert_df(df):
+                    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+                    return df.to_csv().encode('utf-8')
+                csv = convert_df(df)
+                st.download_button(
+                                    label="Download CSV",
+                                     data= csv,
+                                     file_name='result.csv',
+                                     mime='text/csv',
+                                    )
+
+if page == 'Bell Pepper Disease':
     with st.spinner('Loading Please Wait...'):
         time.sleep(2)
 
@@ -81,78 +143,9 @@ if choice == "HOME":
         st.markdown("<h2 style='text-align: center;'>Solution/Treatment </h2>", unsafe_allow_html=True)
         st.markdown('<p class="big-font">Combine one tablespoon baking soda and one-half teaspoon of liquid, non-detergent soap with one gallon of water, and spray the mixture liberally on the plants. Mouthwash. The mouthwash you may use on a daily basis for killing the germs in your mouth can also be effective at killing powdery mildew spores. Also along with using Fungicides that are highly effective with low toxicity, no residue, and long duration.</p>', unsafe_allow_html=True)
         st.markdown('##')
-        st.markdown('##')
+        st.markdown('##')                
 
-
-if choice == "IMAGE DETECTION":
-    with st.spinner('Loading Please Wait...'):
-        time.sleep(7)
-        st.header("BELL PEPPER LEAF DISEASE IMAGE DETECTION")
-        st.markdown('##')
-        main_container = st.container()
-        if "counter" not in st.session_state:
-            st.session_state.counter = 0
-        #if st.button("Reset"):
-            #st.session_state.counter = 0    
-
-        model = tf.keras.models.load_model("saved_model/mdl_wt.hdf5") 
-
-        uploaded_file = st.file_uploader("Choose a image file", type="jpg")
-
-        map_dict = {0: 'Not Healthy, Bacterial Spot',
-                    1: 'Not Healthy, Cercospora Spot',
-                    2: 'Healthy', 
-                    3: 'Not Healthy, Powdery Mildew'}
-
-
-        if uploaded_file is not None:
-            # Convert the file to an opencv image.
-            file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8) 
-            opencv_image = cv2.imdecode(file_bytes, 1)
-            opencv_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
-            resized = cv2.resize(opencv_image,(224,224))
-            # Now do something with the image! For example, let's display it:
-            st.image(opencv_image, channels="RGB")
-
-            resized = mobilenet_v2_preprocess_input(resized)
-            img_reshape = resized[np.newaxis,...]
-
-            Genrate_pred = st.button("Identify Image")    
-            if Genrate_pred:
-                prediction = model.predict(img_reshape).argmax()
-                st.title("The Image Result Is {}".format(map_dict [prediction]))
-                main_container.write(st.session_state.counter)
-                st.session_state.counter + 1
-             
-            df = pd.read_csv("data/result.csv")
-            st.write(df)
-            options = st.header("Options")
-            options_form = st.form("options_form")
-            options.write("Please Fill Up The Form Below:")
-            user_result = options_form.text_input("Image Result")
-            user_age = options_form.text_input("Your Age")
-            add_data = options_form.form_submit_button()
-            if add_data:
-                st.write(user_result,user_age)
-                new_data = {"result": user_result , "age" : int(user_age)}
-                st.write(new_data)
-                df = df.append(new_data, ignore_index=True)
-                df.to_csv("data/result.csv", index=False)
-                st.success("Thank You! Please Head To Home Page For More Info")
-                @st.cache
-                def convert_df(df):
-                    # IMPORTANT: Cache the conversion to prevent computation on every rerun
-                    return df.to_csv().encode('utf-8')
-                csv = convert_df(df)
-                st.download_button(
-                                    label="Download CSV",
-                                     data= csv,
-                                     file_name='result.csv',
-                                     mime='text/csv',
-                                    )
-
-
-if choice=="ABOUT US":
+if page == 'About Us':
     with st.spinner('Loading Please Wait...'):
         time.sleep(1)
         
@@ -176,14 +169,15 @@ if choice=="ABOUT US":
 
         st.markdown("<h1 style='text-align: center;'>System Features:</h1>", unsafe_allow_html=True)
         st.markdown('##')
-        st.markdown("<h2 style='text-align: center;'>Home Page:</h2>", unsafe_allow_html=True)
-        st.markdown('##')
-        st.markdown('<p class="big-font">This is the main page and front page of the web system where you can move to other forms using the navigation bar and also in the main page is where you can find informations about the bell pepper leaf diseases.</p>', unsafe_allow_html=True)
-        st.markdown('##')
         st.markdown("<h2 style='text-align: center;'>Image Detection Page:</h2>", unsafe_allow_html=True)
         st.markdown('##')
         st.markdown('<p class="big-font">In this page of the system is where the users can input images of bell pepper leaf in order to identify whether it is healthy or what kind of disease the bell pepper leaf image have. Futhermore, it also have a navigation bar within this page that can allow users to go to other forms of the system.</p>', unsafe_allow_html=True)
         st.markdown('##')
+        st.markdown("<h2 style='text-align: center;'>Bell Pepper Disease:</h2>", unsafe_allow_html=True)
+        st.markdown('##')
+        st.markdown('<p class="big-font">This is page is where you can find informations about the bell pepper leaf diseases such as Bacterial Spot, Cercospora Spot and Powdery Mildew.</p>', unsafe_allow_html=True)
+        st.markdown('##')
+
 
         st.markdown("<h2 style='text-align: center;'>About Page:</h2>", unsafe_allow_html=True)
         st.markdown('##')
@@ -196,7 +190,7 @@ if choice=="ABOUT US":
         st.markdown('##')
 
 
-if choice=="CONTACT":
+if page == 'Contact':
     with st.spinner('Loading Please Wait...'):
         time.sleep(4)
     
