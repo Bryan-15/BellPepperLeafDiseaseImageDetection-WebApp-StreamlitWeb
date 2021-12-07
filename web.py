@@ -163,7 +163,7 @@ if page == 'About Us':
         st.markdown('##')
         st.markdown("<h2 style='text-align: center;'>About Us</h2>", unsafe_allow_html=True)
         st.markdown('##')
-        st.markdown('<p class="big-font">This web system is a system entitled Bell Pepper Leaf Disease Image Detection B-P-L-D-I-D which purpose is to help user to easily identify what kind of bell pepper leaf disease their photo have. This system is made to help user to lessen the hassle of identifying those kinds of bell pepper leaf disease by themselves. Here in this Web System it is composed of the Home page, Image Detection page, About page and Contact page.</p>', unsafe_allow_html=True)
+        st.markdown('<p class="big-font">This web system is a system entitled Bell Pepper Leaf Disease Image Detection B-P-L-D-I-D which purpose is to help user to easily identify what kind of bell pepper leaf disease their photo have. This system is made to help user to lessen the hassle of identifying those kinds of bell pepper leaf disease by themselves. Here in this Web System it is composed of the Image Detection page, Bell Pepper Disease page, About page and Contact page.</p>', unsafe_allow_html=True)
         st.markdown('##')
         st.markdown('##')
 
@@ -173,7 +173,7 @@ if page == 'About Us':
         st.markdown('##')
         st.markdown('<p class="big-font">In this page of the system is where the users can input images of bell pepper leaf in order to identify whether it is healthy or what kind of disease the bell pepper leaf image have. Futhermore, it also have a navigation bar within this page that can allow users to go to other forms of the system.</p>', unsafe_allow_html=True)
         st.markdown('##')
-        st.markdown("<h2 style='text-align: center;'>Bell Pepper Disease:</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center;'>Bell Pepper Disease Page:</h2>", unsafe_allow_html=True)
         st.markdown('##')
         st.markdown('<p class="big-font">This is page is where you can find informations about the bell pepper leaf diseases such as Bacterial Spot, Cercospora Spot and Powdery Mildew.</p>', unsafe_allow_html=True)
         st.markdown('##')
@@ -206,7 +206,7 @@ if page == 'Contact':
         """, unsafe_allow_html=True)
 
         st.markdown('##')
-        st.markdown("<h2 style='text-align: center;'>YOU CAN CONTACT US THROUGH</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center;'>CONTACT US THROUGH</h2>", unsafe_allow_html=True)
         st.markdown('##')
 
         
