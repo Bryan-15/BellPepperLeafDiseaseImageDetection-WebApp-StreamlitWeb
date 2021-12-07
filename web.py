@@ -79,7 +79,7 @@ if page == 'Image Detection':
                 st.write(new_data)
                 df = df.append(new_data, ignore_index=True)
                 df.to_csv("data/result.csv", index=False)
-                st.success("Thank You! Please Head To Home Page For More Info")
+                st.success("Thank You! Please Head To Bell Pepper Disease Page For More Info")
                 @st.cache
                 def convert_df(df):
                     # IMPORTANT: Cache the conversion to prevent computation on every rerun
