@@ -36,7 +36,7 @@ if page == 'Image Detection':
         time.sleep(7)
         st.header("BELL PEPPER LEAF DISEASE IMAGE DETECTION")
         st.markdown('##') 
-        st.subheader("NOTE:Please use Images with Bell Pepper Leaf Only, in order to properly make use of the website Thank You!")
+        st.subheader("NOTE: In order to make the best use of the website, please only use images with Bell Pepper Leaves.")
         st.markdown('##') 
         model = tf.keras.models.load_model("saved_model/mdl_wt.hdf5") 
 
