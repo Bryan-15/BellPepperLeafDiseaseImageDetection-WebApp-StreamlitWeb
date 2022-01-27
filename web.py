@@ -36,7 +36,8 @@ if page == 'Image Detection':
         time.sleep(7)
         st.header("BELL PEPPER LEAF DISEASE IMAGE DETECTION")
         st.markdown('##') 
-
+        st.subheader("NOTE:Please use Images with Bell Pepper Leaf Only, in order to properly make use of the website Thank You!")
+        st.markdown('##') 
         model = tf.keras.models.load_model("saved_model/mdl_wt.hdf5") 
 
         uploaded_file = st.file_uploader("Choose a image file", type="jpg")
